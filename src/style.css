@@ -1,0 +1,325 @@
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Manrope:wght@400;500;600;700;800&display=swap');
+
+:root {
+  --bg: #171009;
+  --bg-glow: #2b1d10;
+  --bead-unlit: #4a3423;
+  --bead-unlit-stroke: #5e4530;
+  --bead-lit: #d4a017;
+  --bead-lit-glow: #f2c464;
+  --guru: #b5442e;
+  --guru-glow: #d96a4f;
+  --ivory: #f2e8d5;
+  --tan: #a68a6d;
+  --tan-dim: #7a6752;
+  --font-display: 'Fraunces', serif;
+  --font-body: 'Manrope', sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.japa-page {
+  min-height: 100vh;
+  width: 100%;
+  background: radial-gradient(circle at 50% 32%, var(--bg-glow) 0%, var(--bg) 72%);
+  color: var(--ivory);
+  font-family: var(--font-body);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2.5rem 1.25rem 4rem;
+  gap: 1.75rem;
+}
+
+.eyebrow {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.25em;
+  color: var(--tan);
+}
+
+.session-hint {
+  font-size: 0.75rem;
+  color: var(--tan-dim);
+  margin-top: -1.25rem;
+}
+
+/* japa picker */
+.japa-select-row {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+  width: 100%;
+  max-width: 340px;
+}
+
+.japa-select,
+.japa-input {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--tan-dim);
+  color: var(--ivory);
+  border-radius: 999px;
+  padding: 0.6rem 1.1rem;
+  font-size: 0.85rem;
+  font-family: var(--font-body);
+  outline: none;
+}
+
+.japa-select:focus,
+.japa-input:focus {
+  border-color: var(--bead-lit);
+}
+
+.japa-select option {
+  background: var(--bg);
+  color: var(--ivory);
+}
+
+/* the mantra text that scrolls in on each tap */
+.japa-display {
+  overflow: hidden;
+  max-width: 320px;
+  text-align: center;
+  min-height: 2.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.japa-display-text {
+  display: inline-block;
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--bead-lit);
+  white-space: nowrap;
+  animation: japScroll 480ms ease-out;
+}
+
+@keyframes japScroll {
+  from {
+    transform: translateX(70px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* mala ring */
+.mala-wrap {
+  position: relative;
+  width: 320px;
+  height: 320px;
+  cursor: pointer;
+  transition: transform 150ms ease;
+}
+
+.mala-wrap:active {
+  transform: scale(0.98);
+}
+
+.mala-wrap.completing {
+  animation: flashRing 0.65s ease-in-out infinite;
+}
+
+@keyframes flashRing {
+  0%, 100% {
+    filter: drop-shadow(0 0 0px var(--bead-lit-glow));
+  }
+  50% {
+    filter: drop-shadow(0 0 18px var(--bead-lit-glow));
+  }
+}
+
+.pointer-marker {
+  fill: var(--tan);
+  opacity: 0.85;
+}
+
+.thread {
+  fill: none;
+  stroke: var(--bead-unlit-stroke);
+  stroke-width: 1.5;
+  opacity: 0.4;
+}
+
+.bead {
+  stroke-width: 1.5;
+  transition: fill 250ms ease, stroke 250ms ease;
+}
+
+.bead-unlit {
+  fill: var(--bead-unlit);
+  stroke: var(--bead-unlit-stroke);
+}
+
+.bead-lit {
+  fill: var(--bead-lit);
+  stroke: var(--bead-lit-glow);
+}
+
+.guru-bead {
+  fill: var(--guru);
+  stroke: var(--guru-glow);
+  stroke-width: 2;
+}
+
+.count-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.count-number {
+  font-family: var(--font-display);
+  font-size: 4.5rem;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.count-total {
+  font-size: 0.9rem;
+  margin-top: 0.25rem;
+  color: var(--tan);
+}
+
+.tap-hint {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--tan-dim);
+  margin-top: -1rem;
+}
+
+/* mala stat */
+.mala-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+  margin-top: 0.25rem;
+}
+
+.mala-number {
+  font-family: var(--font-display);
+  font-size: 2.5rem;
+  font-weight: 600;
+  color: var(--bead-lit);
+}
+
+.mala-label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--tan);
+}
+
+/* buttons */
+.button-row {
+  display: flex;
+  gap: 1rem;
+  margin-top: 0.25rem;
+}
+
+.btn {
+  padding: 0.55rem 1.3rem;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  background: transparent;
+  border: 1px solid var(--tan-dim);
+  color: var(--ivory);
+  transition: background 150ms ease, border-color 150ms ease, color 150ms ease, transform 100ms ease;
+  cursor: pointer;
+}
+
+.btn:active {
+  transform: scale(0.95);
+}
+
+.btn-danger-armed {
+  border-color: var(--guru);
+  color: var(--guru-glow);
+  background: rgba(181, 68, 46, 0.12);
+}
+
+/* info section */
+.info-section {
+  max-width: 640px;
+  width: 100%;
+  margin-top: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  border-top: 1px solid rgba(166, 138, 109, 0.2);
+  padding-top: 2rem;
+}
+
+.info-block h3 {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--ivory);
+  margin: 0 0 0.6rem 0;
+}
+
+.info-block p {
+  font-size: 0.9rem;
+  line-height: 1.65;
+  color: var(--tan);
+  margin: 0 0 0.6rem 0;
+}
+
+.info-block p:last-child {
+  margin-bottom: 0;
+}
+
+.japa-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+
+.japa-list-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  padding: 0.8rem 1rem;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(166, 138, 109, 0.15);
+}
+
+.japa-list-item .name {
+  font-family: var(--font-display);
+  font-weight: 600;
+  color: var(--bead-lit);
+  font-size: 1rem;
+}
+
+.japa-list-item .meaning {
+  font-size: 0.82rem;
+  color: var(--tan);
+  line-height: 1.5;
+}
+
+@media (max-width: 380px) {
+  .mala-wrap {
+    width: 280px;
+    height: 280px;
+  }
+  .count-number {
+    font-size: 3.6rem;
+  }
+}
