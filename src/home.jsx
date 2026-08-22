@@ -186,6 +186,16 @@ function getStoredLang() {
   return "en";
 }
 
+function getStoredTheme() {
+  try {
+    const saved = localStorage.getItem("japa-theme");
+    if (saved === "light" || saved === "dark") return saved;
+  } catch (e) {
+    /* localStorage unavailable, ignore */
+  }
+  return "dark";
+}
+
 // --- cookie helpers for persisting mala progress across visits ---
 const PROGRESS_COOKIE = "japa_progress";
 const COOKIE_MAX_AGE_DAYS = 365;
@@ -230,6 +240,7 @@ function getStoredProgress() {
 
 export default function JapaCounter() {
   const [lang, setLang] = useState(getStoredLang);
+  const [theme, setTheme] = useState(getStoredTheme);
   const [progress] = useState(getStoredProgress); // read the saved cookie once, on mount
   const [count, setCount] = useState(progress.count);
   const [malas, setMalas] = useState(progress.malas);
@@ -249,6 +260,14 @@ export default function JapaCounter() {
       /* localStorage unavailable, ignore */
     }
   }, [lang]);
+
+  useEffect(() => {
+    try {
+      localStorage.setItem("japa-theme", theme);
+    } catch (e) {
+      /* localStorage unavailable, ignore */
+    }
+  }, [theme]);
 
   // persist malas + in-progress count to a cookie so a returning visitor
   // sees their completed malas and continues counting from where they left off
@@ -321,17 +340,26 @@ export default function JapaCounter() {
   const lifetimeBeads = malas * TOTAL + count;
 
   return (
-    <div className={`japa-page lang-${lang}`}>
-      <div className="lang-switch">
-        {LANGUAGES.map((l) => (
-          <button
-            key={l.code}
-            className={`lang-btn${lang === l.code ? " active" : ""}`}
-            onClick={() => setLang(l.code)}
-          >
-            {l.label}
-          </button>
-        ))}
+    <div className={`japa-page lang-${lang} theme-${theme}`}>
+      <div className="top-controls">
+        <button
+          className="theme-toggle"
+          onClick={() => setTheme((cur) => (cur === "dark" ? "light" : "dark"))}
+          aria-label="Toggle light and dark theme"
+        >
+          {theme === "dark" ? "☀️" : "🌙"}
+        </button>
+        <div className="lang-switch">
+          {LANGUAGES.map((l) => (
+            <button
+              key={l.code}
+              className={`lang-btn${lang === l.code ? " active" : ""}`}
+              onClick={() => setLang(l.code)}
+            >
+              {l.label}
+            </button>
+          ))}
+        </div>
       </div>
 
       <div className="eyebrow">{t.eyebrow}</div>
@@ -460,6 +488,7 @@ export default function JapaCounter() {
             ))}
           </div>
         </div>
+        <div>Developed By Shreyas Phase <a href="tel:+918805604252">8805604252</a></div>
       </section>
     </div>
   );

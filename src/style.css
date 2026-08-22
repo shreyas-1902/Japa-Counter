@@ -47,10 +47,64 @@
   --font-body: 'Noto Sans Devanagari', sans-serif;
 }
 
+/* Light theme — dark theme (default) is untouched, this only overrides
+   the variables so every rule below adapts automatically */
+.japa-page.theme-light {
+  --bg: #f7f1e6;
+  --bg-glow: #efe2c8;
+  --bead-unlit: #ddccae;
+  --bead-unlit-stroke: #c4b090;
+  --bead-lit: #b8860a;
+  --bead-lit-glow: #dba13c;
+  --guru: #8c2f1e;
+  --guru-glow: #b5442e;
+  --ivory: #2a1d10;
+  --tan: #6b5842;
+  --tan-dim: #9c8768;
+}
+
+.japa-page.theme-light .japa-list-item {
+  background: rgba(0, 0, 0, 0.035);
+  border-color: rgba(107, 88, 66, 0.18);
+}
+
+.japa-page.theme-light .info-section {
+  border-top-color: rgba(107, 88, 66, 0.25);
+}
+
+.top-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.theme-toggle {
+  width: 2.2rem;
+  height: 2.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  border: 1px solid var(--tan-dim);
+  background: transparent;
+  font-size: 1rem;
+  line-height: 1;
+  cursor: pointer;
+  touch-action: manipulation;
+  outline: none;
+  transition: border-color 150ms ease, background 150ms ease;
+}
+
+.theme-toggle:active {
+  transform: scale(0.92);
+}
+
 .lang-switch {
   display: flex;
   gap: 0.5rem;
-  margin-top: -0.5rem;
+  margin-top: 0;
 }
 
 .lang-btn {
